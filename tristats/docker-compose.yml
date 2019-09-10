@@ -1,0 +1,44 @@
+# https://www.tristats.lt
+
+version: "3.7"
+
+networks:
+  web_network:
+    external: true
+  backend_network:
+    external: true
+
+volumes:
+  static:
+
+services:
+
+  api:
+    image: dorkasv/tri
+    networks:
+      - web_network
+      - backend_network
+    volumes:
+      - static:/app/static
+    env_file: .env
+    labels:
+      - "traefik.backend=tristats-api"
+      - "traefik.docker.network=web_network"
+      - "traefik.enable=true"
+      - "traefik.frontend.passHostHeader=true"
+      - "traefik.frontend.rule=Host:www.tristats.lt;PathPrefix:/api,/admin"
+      - "traefik.port=8000"
+    restart: always
+
+  vue:
+    image: dorkasv/triweb
+    networks:
+      - web_network
+    labels:
+      - "traefik.backend=tristats-vue"
+      - "traefik.docker.network=web_network"
+      - "traefik.enable=true"
+      - "traefik.frontend.passHostHeader=true"
+      - "traefik.frontend.rule=Host:www.tristats.lt"
+      - "traefik.port=3000"
+    restart: always
