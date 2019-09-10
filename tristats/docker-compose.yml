@@ -54,6 +54,8 @@ services:
       - "traefik.docker.network=web_network"
       - "traefik.enable=true"
       - "traefik.frontend.passHostHeader=true"
-      - "traefik.frontend.rule=Host:www.tristats.lt"
+      - "traefik.frontend.rule=Host:tristats.lt,www.tristats.lt"
       - "traefik.port=80"
+      - "traefik.frontend.redirect.regex=^https?://www.tristats.lt/(.*)"
+      - "traefik.frontend.redirect.replacement=https://tristats.lt/$${1}"
     restart: always
