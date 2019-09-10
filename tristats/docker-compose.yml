@@ -55,5 +55,5 @@ services:
       - "traefik.enable=true"
       - "traefik.frontend.passHostHeader=true"
       - "traefik.frontend.rule=Host:www.tristats.lt"
-      - "traefik.port=3000"
+      - "traefik.port=80"
     restart: always
