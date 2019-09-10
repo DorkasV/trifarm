@@ -5,8 +5,8 @@
 docker swarm init --advertise-addr 10.24.97.208
 
 # Docker networks
-docker network create --driver overlay web_network
-docker network create --driver overlay backend_network
+docker network create --driver overlay --attachable web_network
+docker network create --driver overlay --attachable backend_network
 docker network create --driver overlay agent_network
 
 # Traefik directories
